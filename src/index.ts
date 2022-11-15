@@ -1,3 +1,4 @@
+import {onFrame} from './utils/onFrame';
 import {resolveElement} from './utils/resolveElement';
 import {watchElementSize} from './utils/watchElementSize';
 import {watchVideoFrames} from './utils/watchVideoFrames';
@@ -14,6 +15,9 @@ export interface DynamicBackgroundOptions {
 
     /* If src / target is a string this document will be used to resolve both elements. */
     document?: Document;
+
+    /* How much the image should be smoothed. */
+    smoothness?: number;
 }
 
 export const createDynamicBackground = (opt: DynamicBackgroundOptions): StopDynamicBackground => {
@@ -28,21 +32,30 @@ export const createDynamicBackground = (opt: DynamicBackgroundOptions): StopDyna
     }
 
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+    let drawVideo = false;
+
+    // Main draw loop
+    const frames = onFrame(() => {
+        if (drawVideo) {
+            context.drawImage(src, 0, 0);
+            drawVideo = false;
+        }
+    });
 
     // Link video size to canvas
     const unwatchVideoSize = watchElementSize(src, () => {
-        canvas.width = src.clientWidth;
-        canvas.height = src.clientHeight;
+        canvas.width = src.videoWidth;
+        canvas.height = src.videoHeight;
     });
 
     // Watch each frame change
     const unwatchVideoFrames = watchVideoFrames(src, () => {
-        canvas.height = src.videoHeight;
-        canvas.width = src.videoWidth;
-        context.drawImage(src, 0, 0);
+        drawVideo = true;
     });
 
+    frames.start();
     return () => {
+        frames.stop();
         unwatchVideoSize();
         unwatchVideoFrames();
     };

@@ -1,4 +1,4 @@
-export const createFrameScheduler = (cb: (time: number) => void) => {
+export const onFrame = (cb: (time: number) => void) => {
     let frameId = -1;
     const frame = (time: number) => {
         cb(time);

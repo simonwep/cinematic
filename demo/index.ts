@@ -1,12 +1,20 @@
 import {createDynamicBackground} from '../src';
 import './index.css';
 
+const buttons = Array.from(document.querySelectorAll('.controls > button'));
 const video = document.querySelector('.video-container > .video') as HTMLVideoElement;
-const videos = ['forest-with-river', 'close-up-breaking-waves', 'cliffs-morning-sea.mp4'];
 
 const dynamicBackground = createDynamicBackground({
+    smoothness: 0.5,
     target: '.video-container > .video-background',
     src: video
 });
 
-console.log(dynamicBackground, videos);
+console.log(dynamicBackground);
+
+for (const button of buttons) {
+    button.addEventListener('click', () => {
+        video.src = `/videos/${button.getAttribute('name')}.mp4`;
+        buttons.forEach(btn => btn.classList[btn === button ? 'add' : 'remove']('active'));
+    });
+}
