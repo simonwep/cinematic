@@ -1,17 +1,26 @@
 {
-    "name": "dynamic-video-background",
+    "name": "cinematic",
     "version": "1.0.0",
     "description": "Generates a dynamic background based on the colors of a video",
-    "main": "./lib/dvb.cjs.js",
-    "module": "./lib/dvb.esm.js",
+    "main": "./dist/cinematic.umd.js",
+    "module": "./dist/cinematic.mjs",
+    "exports": {
+        ".": {
+            "import": "./dist/cinematic.mjs",
+            "require": "./dist/cinematic.umd.js"
+        }
+    },
     "author": "Simon Reinisch <contact@reinisch.io>",
-    "bugs": "https://github.com/Simonwep/dynamic-video-background/issues",
-    "homepage": "https://github.com/Simonwep/dynamic-video-background#readme",
-    "repository": "git+https://github.com/Simonwep/dynamic-video-background.git",
+    "bugs": "https://github.com/Simonwep/cinematic/issues",
+    "homepage": "https://github.com/Simonwep/cinematic#readme",
+    "repository": "git+https://github.com/Simonwep/cinematic.git",
     "license": "MIT",
     "scripts": {
-        "build": "rollup -c rollup.config.js",
-        "dev": "vite"
+        "dev": "vite",
+        "build": "tsc --noEmit && vite build",
+        "lint": "eslint '{src,demo}/**/*.{js,ts,tsx}'",
+        "lint:fix": "npm run lint -- --fix",
+        "test:ci": "npm run build && npm run lint:fix"
     },
     "files": [
         "lib",
@@ -20,14 +29,18 @@
     "keywords": [
         "video",
         "dynamic",
-        "background"
+        "background",
+        "cinematics",
+        "cinematic"
     ],
     "devDependencies": {
-        "@rollup/plugin-replace": "^4.0.0",
-        "rollup": "^2.79.0",
-        "rollup-plugin-terser": "^7.0.2",
-        "rollup-plugin-ts": "^3.0.2",
-        "typescript": "^4.8.3",
-        "vite": "^3.1.0"
+        "@typescript-eslint/eslint-plugin": "^5.43.0",
+        "@typescript-eslint/parser": "^5.43.0",
+        "eslint": "^8.28.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "prettier": "2.7.1",
+        "typescript": "^4.9.3",
+        "vite": "^3.2.4",
+        "vite-plugin-banner": "^0.6.1"
     }
 }

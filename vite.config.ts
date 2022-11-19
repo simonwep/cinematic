@@ -1,14 +1,27 @@
 import {defineConfig} from 'vite';
-import {version} from './package.json';
+import banner from 'vite-plugin-banner';
+import {name, version} from './package.json';
 
-export default defineConfig({
-    root: './demo',
+export default defineConfig((env) => ({
+    root: env.command === 'serve' ? './demo' : undefined,
+
+    plugins: [
+        banner(`/*! ${name} ${version} MIT | https://github.com/Simonwep/cinematic */`)
+    ],
+
+    build: {
+        lib: {
+            entry: './src/index.ts',
+            name: 'cinematic',
+            fileName: 'cinematic'
+        }
+    },
 
     server: {
         port: 3005
     },
 
     define: {
-        'VERSION': JSON.stringify(version)
+        'import.meta.env.VERSION': JSON.stringify(version)
     }
-});
+}));
