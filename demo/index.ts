@@ -5,7 +5,6 @@ const buttons = Array.from(document.querySelectorAll('.controls > button'));
 const video = document.querySelector('.video-container > .video') as HTMLVideoElement;
 
 const dynamicBackground = createDynamicBackground({
-    smoothness: 0.5,
     target: '.video-container > .video-background',
     src: video
 });

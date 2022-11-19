@@ -14,7 +14,9 @@
 }
 
 :root {
-    --c-text: #bac5f0;
+    --c-text: #d7def8;
+    --c-text-hover: #9299b4;
+    --c-text-accent: #6d7594;
     --c-primary: #8d92ff;
 }
 
@@ -37,29 +39,42 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
+.demo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .demo .video-container .video {
     border-radius: 8px;
     max-width: 80vw;
 }
 
 .demo .video-container {
+    display: flex;
     position: relative;
 }
 
 .demo .video-container .video-background {
     z-index: -1;
     transform: scale(1);
-    filter: blur(75px);
+    filter: blur(45px);
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
 .controls > button {
     background: transparent;
-    backdrop-filter: blur(4px) brightness(0.5);
+    backdrop-filter: brightness(0.5);
     padding: 8px 16px;
-    color: var(--c-text);
+    color: var(--c-text-accent);
     border: 2px solid transparent;
     outline: none;
     border-radius: 8px;
@@ -71,9 +86,11 @@ body {
 .controls > button.active {
     border: 2px solid rgba(0, 0, 0, 0.5);
     filter: brightness(1.25);
+    color: var(--c-text);
 }
 
 .controls > button:not(.active):hover {
     border: 2px solid rgba(0, 0, 0, 0.25);
     filter: brightness(1.25);
+    color: var(--c-text-hover);
 }
