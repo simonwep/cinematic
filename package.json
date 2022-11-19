@@ -18,9 +18,10 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc --noEmit && vite build",
-        "lint": "eslint '{src,demo}/**/*.{js,ts,tsx}'",
+        "build:demo": "tsc --noEmit && cd demo && vite build",
+        "lint": "eslint '{src,demo/src}/**/*.{js,ts,tsx}'",
         "lint:fix": "npm run lint -- --fix",
-        "test:ci": "npm run build && npm run lint:fix"
+        "test:ci": "npm run lint:fix && npm run build && npm run build:demo"
     },
     "files": [
         "lib",
