@@ -1,5 +1,3 @@
-import { createCanvas } from './utils/createCanvas';
-import { drawImageSmoothed } from './utils/drawImageSmoothed';
 import { onFrame } from './utils/onFrame';
 import { resolveElement } from './utils/resolveElement';
 import { watchElementSize } from './utils/watchElementSize';
@@ -17,7 +15,7 @@ export interface CinematicOptions {
   /* If src / target is a string this document will be used to resolve both elements. */
   document?: Document;
 
-  /* Sensitivity. 1 is realtime and near zero smoothed. Default is 0.075. */
+  /* Sensitivity. 1 is realtime and near zero smoothed. Default is 0.15. */
   sensitivity?: number;
 }
 
@@ -27,7 +25,7 @@ export const createCinematic = (opt: CinematicOptions): StopDynamicBackground =>
   const document = opt.document ?? window.document;
   const canvas = resolveElement(document, opt.target);
   const src = resolveElement(document, opt.src);
-  const smoothness = opt.sensitivity ?? 0.075;
+  const smoothness = opt.sensitivity ?? 0.1;
 
   if (!(src instanceof HTMLVideoElement)) {
     throw new Error(
@@ -40,21 +38,18 @@ export const createCinematic = (opt: CinematicOptions): StopDynamicBackground =>
   }
 
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-  const shadow = createCanvas();
-  let drawVideo = false;
+
+  // Configure context
+  context.imageSmoothingEnabled = false;
 
   // Main draw loop
+  let drawVideo = false;
   const frames = onFrame(() => {
     const { width, height } = canvas;
 
     if (drawVideo && width && height) {
-      // Resize canvas and draw video on it
-      Object.assign(shadow.canvas, { width, height });
-      shadow.context.drawImage(src, 0, 0);
-
-      // Draw smoothed video onto actual canvas
-      drawImageSmoothed(shadow.context, shadow.canvas, context, canvas, smoothness);
-
+      context.globalAlpha = 0.01;
+      context.drawImage(src, 0, 0);
       drawVideo = false;
     }
   });

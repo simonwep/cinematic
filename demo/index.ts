@@ -1,4 +1,4 @@
-import { createCinematic } from '../src';
+import { createCinematic, version } from '../src';
 import './index.css';
 
 const buttons = Array.from(document.querySelectorAll('.controls > button'));
@@ -15,3 +15,6 @@ for (const button of buttons) {
     buttons.forEach((btn) => btn.classList[btn === button ? 'add' : 'remove']('active'));
   });
 }
+
+/* eslint-disable no-console */
+console.log(`Using cinematic v${version}`);
