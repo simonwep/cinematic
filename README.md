@@ -1,6 +1,10 @@
+<br>
+
 <h3 align="center">
     <img alt="Logo" src="https://user-images.githubusercontent.com/30767528/202903379-3c15d3ea-7be3-4159-8871-fa4ac5a78829.png" width="250"/>
 </h3>
+
+<br>
 
 <h3 align="center">
     <b> Cinematic </b> - Add cinematic effects to your videos!
