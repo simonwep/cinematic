@@ -24,7 +24,7 @@
         "test:ci": "npm run lint:fix && npm run build && npm run build:demo"
     },
     "files": [
-        "lib",
+        "dist",
         "src"
     ],
     "keywords": [

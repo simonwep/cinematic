@@ -19,15 +19,15 @@
     <a href="https://github.com/sponsors/Simonwep"><img
         alt="Support me"
         src="https://img.shields.io/badge/github-support-6a15cc.svg"></a>
-    <img alt="version" src="https://img.shields.io/github/lerna-json/v/Simonwep/cinematic?color=%233d24c9&label=version">
+    <img alt="version" src="https://img.shields.io/npm/v/cinematic-effect?color=%233d24c9&label=version">
     <a href="https://www.buymeacoffee.com/aVc3krbXQ"><img
         alt="Buy me a coffee"
         src="https://img.shields.io/badge/%F0%9F%8D%BA-buy%20me%20a%20beer-%23FFDD00"></a>
     <a href="https://github.com/Simonwep/cinematic/actions?query=workflow%3ACI"><img
         alt="Build Status"
         src="https://github.com/Simonwep/cinematic/workflows/CI/badge.svg"></a>
-    <img alt="gzip size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic/dist/cinematic.mjs?compression=gzip">
-    <img alt="brotli size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic/dist/cinematic.mjs?compression=brotli">
+    <img alt="gzip size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic-effect/dist/cinematic.mjs?compression=gzip">
+    <img alt="brotli size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic-effect/dist/cinematic.mjs?compression=brotli">
 </p>
 
 ### Features 🤘
