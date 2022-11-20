@@ -7,7 +7,7 @@
 <br>
 
 <h3 align="center">
-    <b> Cinematic </b> - Add cinematic effects to your videos!
+    <a href="https://simonwep.github.io/cinematic"> Cinematic </a> - Add cinematic effects to your videos!
 </h3>
 
 <p align="center">
@@ -26,8 +26,8 @@
     <a href="https://github.com/Simonwep/cinematic/actions?query=workflow%3ACI"><img
         alt="Build Status"
         src="https://github.com/Simonwep/cinematic/workflows/CI/badge.svg"></a>
-    <img alt="gzip size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic-effect/dist/cinematic.mjs?compression=gzip">
-    <img alt="brotli size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic-effect/dist/cinematic.mjs?compression=brotli">
+    <img alt="gzip size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic-effect?compression=gzip">
+    <img alt="brotli size" src="https://img.badgesize.io/https://cdn.jsdelivr.net/npm/cinematic-effect?compression=brotli">
 </p>
 
 ### Features 🤘
