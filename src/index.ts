@@ -21,7 +21,7 @@ export interface CinematicOptions {
 
 export const version = import.meta.env.VERSION;
 
-export const createCinematic = (opt: CinematicOptions): StopDynamicBackground => {
+export const createCinematicEffect = (opt: CinematicOptions): StopDynamicBackground => {
   const document = opt.document ?? window.document;
   const canvas = resolveElement(document, opt.target);
   const src = resolveElement(document, opt.src);

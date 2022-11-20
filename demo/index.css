@@ -61,7 +61,8 @@ body {
 
 .demo .video-container .video-background {
     z-index: -1;
-    transform: scale(1);
+    opacity: 0.75;
+    transform: scale(1.05);
     filter: blur(45px);
     position: absolute;
     width: 100%;
@@ -73,7 +74,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 48px;
 }
 
 .demo header h1 {
@@ -86,7 +87,7 @@ body {
 .demo header p {
     font-size: 12px;
     letter-spacing: 2px;
-    font-weight: lighter;
+    font-weight: normal;
     color: var(--c-text);
 }
 

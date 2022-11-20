@@ -1,5 +1,5 @@
 {
-    "name": "cinematic",
+    "name": "cinematic-effect",
     "version": "1.0.0",
     "description": "Generates a dynamic background based on the colors of a video",
     "main": "./dist/cinematic.umd.js",

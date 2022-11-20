@@ -1,10 +1,10 @@
-import { createCinematic, version } from '../src';
+import { createCinematicEffect, version } from '../src';
 import './index.css';
 
 const buttons = Array.from(document.querySelectorAll('.controls > button'));
 const video = document.querySelector('.video-container > .video') as HTMLVideoElement;
 
-createCinematic({
+createCinematicEffect({
   target: '.video-container > .video-background',
   src: video,
 });
