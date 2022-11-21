@@ -1,11 +1,11 @@
-import { createCinematicEffect, version } from '../src';
+import { createCinematicEffect, version } from '../../src';
 import './index.css';
 
 const buttons = Array.from(document.querySelectorAll('.controls > button')) as HTMLButtonElement[];
-const effect = createCinematicEffect({
+const effect = (window.effect = createCinematicEffect({
   target: '.video-container > .video-background',
   src: '.video-container > .video',
-});
+}));
 
 const loadVideo = async (button: HTMLButtonElement) => {
   buttons.forEach((btn) => btn.setAttribute('disabled', 'true'));
@@ -32,3 +32,4 @@ for (const button of buttons) {
 
 /* eslint-disable no-console */
 console.log(`Using cinematic v${version}`);
+console.log(`Type \`effect\` in your console to adjust the settings :)`);

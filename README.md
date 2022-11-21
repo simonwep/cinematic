@@ -33,10 +33,11 @@
 ### Features 🤘
 
 * 🌟 Modern bundle.
-* 🔩 Ultra tiny (less than 1kb compressed)
+* 🔩 Ultra tiny (~1kb compressed)
 * 👌 Minimalistic and straight-forward API.
 * ⚡ Performant - uses only native browser features to achieve the affect!
-* ✔ Zero dependencies.
+* 0️⃣ Zero dependencies.
+* 🌅 Video-to-video transitions.
 
 ### Usage
 
@@ -54,18 +55,18 @@ Your HTML:
 </div>
 ```
 
-Your TypeScript:
+Your TypeScript (check out [options](#options) and the [effect api](#api)):
 
 ```ts
 import { createCinematicEffect } from 'cinematic-effect';
 
-const destroy = createCinematicEffect({
+const effect = createCinematicEffect({
   target: '#background', // Canvas to project effect onto
   src: '#video' // Source video element or selector
 });
 ```
 
-Your CSS: 
+Your CSS:
 
 > This library is mainly taking care of creating a smooth effect and syncing the frames,
 > the final effect is applied by you using css properties!
@@ -89,3 +90,47 @@ Your CSS:
 ```
 
 Check out the [demo](demo) for a full-fledged demo!
+
+### Options
+
+The following options are available when creating a new instance:
+
+```ts
+import { createCinematicEffect } from 'cinematic-effect';
+
+const effect = createCinematicEffect({
+  
+  // Target element the effect is rendered to.
+  // Can be a selector or the element itself.
+  target: '#background',
+  
+  // Video source, can be a selector or the video element itself.
+  src: '#video',
+
+  // Transition speed, default is 0.01, realtime is 1.
+  sensitivity: 0.01
+});
+```
+
+### API
+
+Each cinematic effect comes with the following API.
+It is **highly recommended** to use the API when changing the video instead of destroying / re-instantiating an effect,
+this way you will get a video-to-video transition and it's more performant.
+
+```ts
+interface CinematicEffect {
+
+  // Destroy instance.
+  destroy(): void;
+
+  // Change source, target or sensitivity.
+  setSource(video: string | HTMLVideoElement): void;
+  setTarget(target: string | HTMLCanvasElement): void;
+  setSensitivity(sensitivity: number): void;
+
+  // Get current source and target elements.
+  get source(): HTMLVideoElement;
+  get target(): HTMLCanvasElement;
+}
+```

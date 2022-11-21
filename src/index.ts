@@ -18,11 +18,15 @@ export interface CinematicOptions {
 }
 
 export interface CinematicEffect {
+  // Destroy instance.
   destroy(): void;
+
+  // Change source, target or sensitivity.
   setSource(video: string | HTMLVideoElement): void;
   setTarget(target: string | HTMLCanvasElement): void;
   setSensitivity(sensitivity: number): void;
 
+  // Get current source and target elements.
   get source(): HTMLVideoElement;
   get target(): HTMLCanvasElement;
 }
@@ -104,7 +108,7 @@ export const createCinematicEffect = (opt: CinematicOptions): CinematicEffect =>
     videoFramesWatcher.destroy();
   };
 
-  setSensitivity(opt.sensitivity ?? 0.1);
+  setSensitivity(opt.sensitivity ?? 0.01);
   setSource(opt.src);
   setTarget(opt.target);
 
