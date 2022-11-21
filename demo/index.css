@@ -47,16 +47,16 @@ body {
     flex-direction: column;
 }
 
-.demo .video-container .video {
-    border-radius: 8px;
-    max-width: 95vmin;
-    max-height: 50vh;
-}
-
 .demo .video-container {
     display: flex;
     justify-self: flex-start;
     position: relative;
+}
+
+.demo .video-container .video {
+    border-radius: 8px;
+    max-width: calc(100vmin - 24px);
+    max-height: 50vh;
 }
 
 .demo .video-container .video-background {
@@ -78,7 +78,7 @@ body {
 }
 
 .demo header h1 {
-    font-size: 80px;
+    font-size: min(80px, 15vw);
     letter-spacing: 2px;
     font-weight: lighter;
     color: var(--c-text);
@@ -88,6 +88,7 @@ body {
     font-size: 12px;
     letter-spacing: 2px;
     font-weight: normal;
+    text-align: center;
     color: var(--c-text);
 }
 
@@ -96,13 +97,13 @@ body {
     align-items: center;
     text-decoration: none;
     font-weight: 500;
-    font-size: 0.3em;
+    font-size: 12px;
     color: white;
-    padding: 0.75em 2.25em 0.75em 1.25em;
+    padding: 10px 14px 10px;
     margin-top: 24px;
     transition: 0.3s all;
     background: var(--cta-button-gradient);
-    border-radius: 50em;
+    border-radius: 100px;
     position: relative;
 }
 
@@ -140,7 +141,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     gap: 4px;
-    margin-top: 6px;
+    margin: 6px 12px 0;
 }
 
 .demo .controls > button {
@@ -162,8 +163,14 @@ body {
     color: var(--c-text);
 }
 
-.demo .controls > button:not(.active):hover {
+.demo .controls > button:not(.active, :disabled):hover {
     border: 2px solid rgba(0, 0, 0, 0.25);
     filter: brightness(1.25);
     color: var(--c-text-hover);
+}
+
+
+.demo .controls > button:disabled {
+    cursor: wait;
+    filter: grayscale(1);
 }
