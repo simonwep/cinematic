@@ -2,14 +2,12 @@ import { createCinematicEffect, version } from '../src';
 import './index.css';
 
 const buttons = Array.from(document.querySelectorAll('.controls > button')) as HTMLButtonElement[];
-const target = '.video-container > .video-background';
-
-let switching = false;
-let video = document.querySelector('.video-container > .video') as HTMLVideoElement;
-let cleanup = createCinematicEffect({ target, src: video });
+const effect = createCinematicEffect({
+  target: '.video-container > .video-background',
+  src: '.video-container > .video',
+});
 
 const loadVideo = async (button: HTMLButtonElement) => {
-  if (switching) return;
   buttons.forEach((btn) => btn.setAttribute('disabled', 'true'));
 
   const newVideo = document.createElement('video');
@@ -21,12 +19,8 @@ const loadVideo = async (button: HTMLButtonElement) => {
     buttons.forEach((btn) => btn.removeAttribute('disabled'));
     buttons.forEach((btn) => btn.classList[btn === button ? 'add' : 'remove']('active'));
 
-    cleanup();
-    cleanup = createCinematicEffect({ target, src: newVideo });
-
-    switching = false;
-    video.replaceWith(newVideo);
-    video = newVideo;
+    effect.source.replaceWith(newVideo);
+    effect.setSource(newVideo);
   });
 
   newVideo.src = `./videos/${button.getAttribute('name')}.mp4`;

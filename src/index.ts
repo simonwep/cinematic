@@ -1,9 +1,7 @@
+import { createElementSizeWatcher } from './utils/createElementSizeWatcher';
+import { createVideoFramesWatcher } from './utils/createVideoFramesWatcher';
 import { onFrame } from './utils/onFrame';
 import { resolveElement } from './utils/resolveElement';
-import { watchElementSize } from './utils/watchElementSize';
-import { watchVideoFrames } from './utils/watchVideoFrames';
-
-export type StopDynamicBackground = () => void;
 
 export interface CinematicOptions {
   /* The source video element. */
@@ -19,56 +17,111 @@ export interface CinematicOptions {
   sensitivity?: number;
 }
 
+export interface CinematicEffect {
+  destroy(): void;
+  setSource(video: string | HTMLVideoElement): void;
+  setTarget(target: string | HTMLCanvasElement): void;
+  setSensitivity(sensitivity: number): void;
+
+  get source(): HTMLVideoElement;
+  get target(): HTMLCanvasElement;
+}
+
 export const version = import.meta.env.VERSION;
 
-export const createCinematicEffect = (opt: CinematicOptions): StopDynamicBackground => {
+export const createCinematicEffect = (opt: CinematicOptions): CinematicEffect => {
   const document = opt.document ?? window.document;
-  const canvas = resolveElement(document, opt.target);
-  const src = resolveElement(document, opt.src);
-  const smoothness = opt.sensitivity ?? 0.1;
-
-  if (!(src instanceof HTMLVideoElement)) {
-    throw new Error(
-      `Received invalid src, expects selector to HTMLVideoElement or the element itself but got ${src?.tagName}`
-    );
-  } else if (!(canvas instanceof HTMLCanvasElement)) {
-    throw new Error('Target element has to be a canvas.');
-  } else if (!(smoothness > 0 && smoothness <= 1)) {
-    throw new Error(`Smoothness must be an integer greater than 0 and less or equal than 1, received ${smoothness}`);
-  }
-
-  const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+  let sensitivity = 0.1;
+  let source = document.createElement('video');
+  let canvas = document.createElement('canvas');
+  let context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
   // Configure context
   context.imageSmoothingEnabled = false;
 
   // Main draw loop
   let drawVideo = false;
-  const frames = onFrame(() => {
+  const loop = onFrame(() => {
     const { width, height } = canvas;
 
     if (drawVideo && width && height) {
-      context.globalAlpha = 0.01;
-      context.drawImage(src, 0, 0);
+      context.globalAlpha = sensitivity;
+      context.drawImage(source, 0, 0);
       drawVideo = false;
     }
   });
 
   // Link video size to canvas
-  const unwatchVideoSize = watchElementSize(src, () => {
-    canvas.width = src.videoWidth;
-    canvas.height = src.videoHeight;
+  const elementSizeWatcher = createElementSizeWatcher(() => {
+    if (source.videoWidth !== canvas.width || source.videoHeight !== canvas.height) {
+      canvas.width = source.videoWidth;
+      canvas.height = source.videoHeight;
+    }
   });
 
   // Watch each frame change
-  const unwatchVideoFrames = watchVideoFrames(src, () => {
+  const videoFramesWatcher = createVideoFramesWatcher(() => {
     drawVideo = true;
   });
 
-  frames.start();
-  return () => {
-    frames.stop();
-    unwatchVideoSize();
-    unwatchVideoFrames();
+  const setSource = (video: string | HTMLVideoElement): void => {
+    const element = resolveElement(document, video);
+
+    if (!(element instanceof HTMLVideoElement)) {
+      throw new Error(
+        `Received invalid src, expects selector to HTMLVideoElement or the element itself but got ${element?.tagName}`
+      );
+    }
+
+    elementSizeWatcher.watch(element);
+    videoFramesWatcher.watch(element);
+    source = element;
+  };
+
+  const setTarget = (target: string | HTMLCanvasElement): void => {
+    const element = resolveElement(document, target);
+
+    if (!(element instanceof HTMLCanvasElement)) {
+      throw new Error('Target element has to be a canvas.');
+    }
+
+    canvas = element;
+    context = element.getContext('2d') as CanvasRenderingContext2D;
+    loop.start();
+  };
+
+  const setSensitivity = (value: number): void => {
+    if (!(value > 0 && value <= 1)) {
+      throw new Error(`Smoothness must be an integer greater than 0 and less or equal than 1, received ${value}`);
+    }
+
+    sensitivity = value;
+  };
+
+  const destroy = () => {
+    loop.stop();
+    elementSizeWatcher.destroy();
+    videoFramesWatcher.destroy();
+  };
+
+  setSensitivity(opt.sensitivity ?? 0.1);
+  setSource(opt.src);
+  setTarget(opt.target);
+
+  return {
+    destroy,
+
+    // Update functions
+    setSource,
+    setTarget,
+    setSensitivity,
+
+    // Getters
+    get target(): HTMLCanvasElement {
+      return canvas;
+    },
+    get source(): HTMLVideoElement {
+      return source;
+    },
   };
 };
