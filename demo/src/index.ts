@@ -12,6 +12,7 @@ const loadVideo = async (button: HTMLButtonElement) => {
 
   const newVideo = document.createElement('video');
   newVideo.classList.add('video');
+  newVideo.controls = true;
   newVideo.autoplay = true;
   newVideo.muted = true;
 
